@@ -4,10 +4,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:padding="@dimen/activity_vertical_margin"
     tools:context="com.application.subitoit.githubstargazers.MainActivity">
 
     <android.support.design.widget.TextInputLayout
@@ -31,6 +28,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/repoTextInputLayoutId"
         android:backgroundTint="@color/colorPrimary"
         android:textColor="@android:color/white"
