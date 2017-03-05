@@ -5,4 +5,5 @@
     <string name="find_button">FIND</string>
     <string name="retrieve_error">Oh Snap! You got some error on your request!</string>
     <string name="no_data_found">Oh Snap! \nNo data has been found!</string>
+    <string name="intro">Insert Github Owner\-Repo\'s name to get all your Stargazers follower list</string>
 </resources>

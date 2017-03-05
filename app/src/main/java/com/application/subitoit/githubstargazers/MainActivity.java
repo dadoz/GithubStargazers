@@ -1,44 +1,35 @@
 package com.application.subitoit.githubstargazers;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 
 import com.application.subitoit.githubstargazers.application.StargazersApplication;
+import com.application.subitoit.githubstargazers.views.RepoOwnerDataView;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Unbinder unbinder;
-
-    @BindView(R.id.findButtonId)
-    Button findButton;
-    @BindView(R.id.ownerTextInputLayoutId)
-    TextInputLayout ownerTextInputLayout;
-    @BindView(R.id.repoTextInputLayoutId)
-    TextInputLayout repoTextInputLayout;
+//    @BindView(R.id.repoOwnerDataViewId)
+    RepoOwnerDataView repoOwnerDataView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.setDebug(true);
         unbinder = ButterKnife.bind(this);
+        repoOwnerDataView = (RepoOwnerDataView) findViewById(R.id.repoOwnerDataViewId);
         onInitView();
     }
 
 
     @Override
     protected void onDestroy() {
-//        if (unbinder != null)
-//            unbinder.unbind();
+        if (unbinder != null)
+            unbinder.unbind();
         super.onDestroy();
     }
 
@@ -46,14 +37,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * init view to handle button in custom view interaction
      */
     private void onInitView() {
-        findButton.setOnClickListener(this);
+        repoOwnerDataView.setFindButtonOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        if (!repoOwnerDataView.isValidInputData()) {
+            repoOwnerDataView.setErrorInputData();
+            return;
+        }
+
         StargazersApplication application = ((StargazersApplication) getApplication());
-        application.setOwner(ownerTextInputLayout.getEditText().getText().toString());
-        application.setRepo(repoTextInputLayout.getEditText().getText().toString());
+        application.setOwner(repoOwnerDataView.getOwner());
+        application.setRepo(repoOwnerDataView.getRepo());
         startActivity(new Intent(this, StargazersListActivity.class));
     }
 }
