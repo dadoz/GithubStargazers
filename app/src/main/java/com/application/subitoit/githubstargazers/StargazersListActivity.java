@@ -15,6 +15,7 @@ import com.application.subitoit.githubstargazers.application.StargazersApplicati
 import com.application.subitoit.githubstargazers.presenter.StargazerPresenter;
 import com.application.subitoit.githubstargazers.presenter.StargazerView;
 import com.application.subitoit.githubstargazers.utils.Utils;
+import com.application.subitoit.githubstargazers.views.EmptyView;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -30,6 +31,8 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
     RecyclerView recyclerView;
     @BindView(R.id.stargazerProgressbarId)
     ProgressBar progressBar;
+    @BindView(R.id.emptyViewId)
+    EmptyView emptyView;
     private Unbinder unbinder;
 
     @Override
@@ -63,6 +66,7 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
     @Override
     public void bindData(List<?> items, int i) {
         progressBar.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
         initRecyclerView(items);
     }
 
@@ -72,6 +76,7 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
         //TODO implement it - show a view maybe
         recyclerView.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
         Snackbar.make(findViewById(R.id.activity_main), R.string.retrieve_error, Snackbar.LENGTH_SHORT).show();
     }
 

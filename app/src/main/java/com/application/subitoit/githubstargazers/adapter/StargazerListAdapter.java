@@ -49,7 +49,7 @@ public class StargazerListAdapter extends RecyclerView.Adapter<StargazerListAdap
 
         Glide.with(vh.itemView.getContext())
                 .load(avatarUrl)
-//                .placeholder(R.drawable.piwo_48)
+                .placeholder(R.mipmap.github_placeholder)
 //                .transform(new CircleTransform(context))
 //                .override(150, 150)
                 .into(vh.avatarImageView);

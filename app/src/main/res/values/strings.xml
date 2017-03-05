@@ -4,4 +4,5 @@
     <string name="repo_hint">repo</string>
     <string name="find_button">FIND</string>
     <string name="retrieve_error">Oh Snap! You got some error on your request!</string>
+    <string name="no_data_found">Oh Snap! \nNo data has been found!</string>
 </resources>
