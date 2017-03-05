@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -32,6 +33,7 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
     @BindView(R.id.emptyViewId)
     EmptyView emptyView;
     private Unbinder unbinder;
+    private StargazerPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +58,21 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
      * iit view and retrieve stargazers data
      */
     private void onInitView() {
-        new StargazerPresenter().init(new WeakReference<>(this),
+        initActionbar();
+        presenter = new StargazerPresenter();
+        presenter.init(new WeakReference<>(this),
                 new WeakReference<>(this), Utils.buildParams(owner, repo));
+    }
+
+    /**
+     * actionbar set listener and back arrow
+     */
+    private void initActionbar() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -74,7 +89,8 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
         recyclerView.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
-        Snackbar.make(findViewById(R.id.activity_main), R.string.retrieve_error, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(findViewById(R.id.activity_main), R.string.retrieve_error,
+                Snackbar.LENGTH_SHORT).show();
     }
 
     /**
@@ -90,4 +106,15 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
         recyclerView.setAdapter(new StargazerListAdapter(items));
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (presenter != null)
+                    presenter.unsubscribe();
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

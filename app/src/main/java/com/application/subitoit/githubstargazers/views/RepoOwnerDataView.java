@@ -2,23 +2,28 @@ package com.application.subitoit.githubstargazers.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Parcelable;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.application.subitoit.githubstargazers.MainActivity;
 import com.application.subitoit.githubstargazers.R;
-import com.application.subitoit.githubstargazers.application.StargazersApplication;
 
-public class RepoOwnerDataView extends RelativeLayout implements TextWatcher {
+import icepick.Icepick;
+import icepick.State;
+
+public class RepoOwnerDataView extends RelativeLayout {
     Button findButton;
     TextInputLayout ownerTextInputLayout;
     TextInputLayout repoTextInputLayout;
+    @State
+    String repo;
+    @State
+    String owner;
 
     public RepoOwnerDataView(Context context) {
         super(context);
@@ -46,8 +51,8 @@ public class RepoOwnerDataView extends RelativeLayout implements TextWatcher {
         findButton = (Button) view.findViewById(R.id.findButtonId);
         ownerTextInputLayout = (TextInputLayout) view.findViewById(R.id.ownerTextInputLayoutId);
         repoTextInputLayout = (TextInputLayout) view.findViewById(R.id.repoTextInputLayoutId);
-        ownerTextInputLayout.getEditText().addTextChangedListener(this);
-        repoTextInputLayout.getEditText().addTextChangedListener(this);
+        ownerTextInputLayout.getEditText().addTextChangedListener(new TextWatcherImpl("owner"));
+        repoTextInputLayout.getEditText().addTextChangedListener(new TextWatcherImpl("repo"));
     }
 
     /**
@@ -73,26 +78,55 @@ public class RepoOwnerDataView extends RelativeLayout implements TextWatcher {
 
     public void setErrorInputData() {
         if (repoTextInputLayout.getEditText().getText().toString().equals(""))
-            repoTextInputLayout.setError("no data");
+            repoTextInputLayout.setError(getContext().getString(R.string.no_input_data));
 
         if (ownerTextInputLayout.getEditText().getText().toString().equals(""))
-            ownerTextInputLayout.setError("no data");
+            ownerTextInputLayout.setError(getContext().getString(R.string.no_input_data));
     }
 
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+    @Override public Parcelable onSaveInstanceState() {
+        return Icepick.saveInstanceState(this, super.onSaveInstanceState());
     }
 
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+    @Override public void onRestoreInstanceState(Parcelable state) {
+        super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
+        ownerTextInputLayout.getEditText().setText(owner);
+        repoTextInputLayout.getEditText().setText(repo);
     }
 
-    @Override
-    public void afterTextChanged(Editable s) {
-        //clear error set on input text layout on error
-        repoTextInputLayout.setError(null);
-        ownerTextInputLayout.setError(null);
+
+    /**
+     * custom imple of text watcher
+     */
+    private class TextWatcherImpl implements TextWatcher {
+        private final String type;
+
+        TextWatcherImpl(String type) {
+            this.type = type;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            switch (type) {
+                case "repo":
+                    repo = repoTextInputLayout.getEditText().getText().toString();
+                    repoTextInputLayout.setError(null);
+                    break;
+                case "owner":
+                    owner = ownerTextInputLayout.getEditText().getText().toString();
+                    ownerTextInputLayout.setError(null);
+                    break;
+            }
+        }
     }
 }

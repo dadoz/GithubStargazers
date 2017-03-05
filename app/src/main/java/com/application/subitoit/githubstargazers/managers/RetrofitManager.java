@@ -17,6 +17,7 @@ public class RetrofitManager {
     private static RetrofitManager instance;
     private StargazerService service;
     private final String TAG = "RetrofitManager";
+    public static String baseUrlEndpoint = BuildConfig.GITHUB_ENDPOINT;
 
     //dadoz/SelectCardViewPrototype
     // API URL https://api.github.com/repos/{owner}/{repo}/stargazers
@@ -54,7 +55,7 @@ public class RetrofitManager {
 //                    .build();
 
             service = new Retrofit.Builder()
-                    .baseUrl(BuildConfig.GITHUB_ENDPOINT)
+                    .baseUrl(baseUrlEndpoint)
 //                    .client(client)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(getGson()))
