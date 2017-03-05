@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/ownerEditTextLayoutId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/owner_hint"/>
@@ -30,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/repoEditTextLayoutId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/repo_hint"/>

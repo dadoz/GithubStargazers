@@ -42,7 +42,7 @@ public class StargazersRetrofitTest {
         mActivityRule = new ActivityTestRule<>(MainActivity.class, true, false);
     }
 
-    @Before
+//    @Before
     public void setUp() throws Exception {
         server = new MockWebServer();
         server.start();
@@ -50,7 +50,7 @@ public class StargazersRetrofitTest {
 //        injectInstrumentation(InstrumentationRegistry.getInstrumentation());
     }
 
-    @Test
+//    @Test
     public void testQuoteIsShown() throws Exception {
         String fileName = "quote_200_ok_response.json";
         server.enqueue(new MockResponse()
