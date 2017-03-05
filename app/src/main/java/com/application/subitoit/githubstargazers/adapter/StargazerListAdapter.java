@@ -15,7 +15,6 @@ import java.util.List;
 
 
 public class StargazerListAdapter extends RecyclerView.Adapter<StargazerListAdapter.ViewHolder> {
-    private static final String TAG = "StargazerListAdapter";
     private List<?> items;
 
     public StargazerListAdapter(List<?> devices) {
@@ -41,7 +40,12 @@ public class StargazerListAdapter extends RecyclerView.Adapter<StargazerListAdap
         return items == null ? 0 : items.size();
     }
 
-    public void setAvatar(ViewHolder vh, String avatarUrl) {
+    /**
+     * set avatar on user - Glide lib to handle pics
+     * @param vh
+     * @param avatarUrl
+     */
+    private void setAvatar(ViewHolder vh, String avatarUrl) {
         if (avatarUrl == null) {
             Glide.clear(vh.avatarImageView);
             return;
@@ -50,14 +54,9 @@ public class StargazerListAdapter extends RecyclerView.Adapter<StargazerListAdap
         Glide.with(vh.itemView.getContext())
                 .load(avatarUrl)
                 .placeholder(R.mipmap.github_placeholder)
-//                .transform(new CircleTransform(context))
-//                .override(150, 150)
                 .into(vh.avatarImageView);
     }
 
-    /**
-     *
-     */
     protected class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView usernameTextview;
         private final ImageView avatarImageView;

@@ -24,12 +24,6 @@ public class EmptyView extends LinearLayout {
         initView();
     }
 
-    @TargetApi(23)
-    public EmptyView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initView();
-    }
-
     private void initView() {
         inflate(getContext(), R.layout.empty_view_layout, this);
     }

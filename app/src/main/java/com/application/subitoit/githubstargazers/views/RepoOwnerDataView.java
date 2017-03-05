@@ -40,12 +40,6 @@ public class RepoOwnerDataView extends RelativeLayout {
         initView();
     }
 
-    @TargetApi(23)
-    public RepoOwnerDataView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initView();
-    }
-
     private void initView() {
         View view = inflate(getContext(), R.layout.repo_owner_textinput_layout, this);
         findButton = (Button) view.findViewById(R.id.findButtonId);
@@ -55,10 +49,6 @@ public class RepoOwnerDataView extends RelativeLayout {
         repoTextInputLayout.getEditText().addTextChangedListener(new TextWatcherImpl("repo"));
     }
 
-    /**
-     *
-     * @param listener
-     */
     public void setFindButtonOnClickListener(OnClickListener listener) {
         findButton.setOnClickListener(listener);
     }

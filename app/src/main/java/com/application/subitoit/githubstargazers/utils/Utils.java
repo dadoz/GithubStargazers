@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 
 public class Utils {
     /**
-     *
+     * build params to get request
      * @return
      */
     public static SparseArray<String> buildParams(String owner, String repo) {
@@ -25,7 +25,7 @@ public class Utils {
 
 
     /**
-     *
+     * read file from assets, depending on filename provided
      * @param assets
      * @param filename
      * @return
