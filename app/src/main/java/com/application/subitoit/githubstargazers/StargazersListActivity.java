@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -26,32 +27,31 @@ import butterknife.Unbinder;
 public class StargazersListActivity extends AppCompatActivity implements StargazerView {
     private String owner;
     private String repo;
-    @BindView(R.id.stargazerRecyclerViewId)
     RecyclerView recyclerView;
-    @BindView(R.id.stargazerProgressbarId)
     ProgressBar progressBar;
-    @BindView(R.id.emptyViewId)
     EmptyView emptyView;
-    private Unbinder unbinder;
+
     private StargazerPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stargazers_list);
-        unbinder = ButterKnife.bind(this);
-        ButterKnife.setDebug(true);
 
         repo = ((StargazersApplication) getApplication()).getRepo();
         owner = ((StargazersApplication) getApplication()).getOwner();
+
+        bindView();
         onInitView();
     }
 
-    @Override
-    protected void onDestroy() {
-        if (unbinder != null)
-            unbinder.unbind();
-        super.onDestroy();
+    /**
+     *
+     */
+    private void bindView() {
+        recyclerView = (RecyclerView) findViewById(R.id.stargazerRecyclerViewId);
+        progressBar = (ProgressBar) findViewById(R.id.stargazerProgressbarId);
+        emptyView = (EmptyView) findViewById(R.id.emptyViewId);
     }
 
     /**
@@ -98,8 +98,9 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
      * @param items
      */
     private void initRecyclerView(List<?> items) {
-        if (items.size() == 0)
+        if (items.size() == 0) {
             return;
+        }
         recyclerView.setVisibility(View.VISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);

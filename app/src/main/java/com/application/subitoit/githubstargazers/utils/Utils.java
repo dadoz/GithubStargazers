@@ -1,13 +1,15 @@
 package com.application.subitoit.githubstargazers.utils;
 
 import android.app.Application;
+import android.content.res.AssetManager;
 import android.util.SparseArray;
 
 import com.application.subitoit.githubstargazers.application.StargazersApplication;
 
-/**
- * Created by davide on 05/03/2017.
- */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class Utils {
     /**
@@ -21,4 +23,27 @@ public class Utils {
         return params;
     }
 
+
+    /**
+     *
+     * @param assets
+     * @param filename
+     * @return
+     */
+    public static String readFileFromAssets(AssetManager assets, String filename) {
+        try {
+            InputStream is = assets.open(filename);
+            int size = is.available();
+
+            // Read the entire asset into a local byte buffer.
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+
+            // Convert the buffer into a string.
+            return new String(buffer);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

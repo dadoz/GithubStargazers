@@ -1,14 +1,15 @@
 package com.application.subitoit.githubstargazers;
 
-import android.content.Context;
+import android.app.Application;
 import android.content.Intent;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.InstrumentationTestCase;
+import android.util.Log;
 
+import com.application.subitoit.githubstargazers.application.StargazersApplication;
 import com.application.subitoit.githubstargazers.managers.RetrofitManager;
+import com.application.subitoit.githubstargazers.utils.Utils;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,78 +17,70 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.net.URL;
-
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import retrofit2.Retrofit;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.not;
 
 
 @RunWith(AndroidJUnit4.class)
 public class StargazersRetrofitTest {
-
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityRule;
     private MockWebServer server;
 
-    public StargazersRetrofitTest() {
-        mActivityRule = new ActivityTestRule<>(MainActivity.class, true, false);
-    }
+    private final static String STARGAZERS_RESPONSE_SUCCESS_FILENAME = "stargazers_response_200.json";
+    private final static String STARGAZERS_RESPONSE_ERROR_FILENAME = "stargazers_response_400.json";
 
-//    @Before
+    @Rule
+    public ActivityTestRule<MainActivity> mRule = new ActivityTestRule<>(MainActivity.class);
+
+    @Before
     public void setUp() throws Exception {
         server = new MockWebServer();
         server.start();
         RetrofitManager.baseUrlEndpoint = server.url("/").url().toString();
-//        injectInstrumentation(InstrumentationRegistry.getInstrumentation());
+
+        ((StargazersApplication) mRule.getActivity().getApplication()).setOwner("dadoz");
+        ((StargazersApplication) mRule.getActivity().getApplication()).setRepo("SelectCardViewPrototype");
+
+        mRule.getActivity().startActivity(new Intent(mRule.getActivity(), StargazersListActivity.class));
     }
 
-//    @Test
-    public void testQuoteIsShown() throws Exception {
-        String fileName = "quote_200_ok_response.json";
+    @Test
+    public void getStargazerSuccessTest() throws Exception {
+        String responseString = Utils.readFileFromAssets(mRule.getActivity().getAssets(),
+                STARGAZERS_RESPONSE_SUCCESS_FILENAME);
+
         server.enqueue(new MockResponse()
                 .setResponseCode(200)
-                .setBody(RestServiceTestHelper.getStringFromFile(getInstrumentation().getContext(), fileName)));
+                .setBody(responseString));
 
-        Intent intent = new Intent();
-        mActivityRule.launchActivity(intent);
-
-        onView(withId(R.id.findButtonId)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withText("I came from a ")).check(matches(isDisplayed()));
+        onView(withId(R.id.emptyViewId)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.stargazerProgressbarId)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.stargazerRecyclerViewId)).check(matches(isDisplayed()));
     }
 
-//
-//    @Test
-//    public void testRetryButtonShowsWhenError() throws Exception {
-//        String fileName = "quote_404_not_found.json";
-//
-//        server.enqueue(new MockResponse()
-//                .setResponseCode(404)
-//                .setBody(RestServiceTestHelper.getStringFromFile(getInstrumentation().getContext(), fileName)));
-//
-//        Intent intent = new Intent();
-//        mActivityRule.launchActivity(intent);
-//
-//        onView(withId(R.id.findButtonId)).check(matches(isDisplayed()));
-//        onView(withText("Quote Not found")).check(matches(isDisplayed()));
-//    }
+
+    @Test
+    public void getStargazerErrorTest() throws Exception {
+        String responseString = Utils.readFileFromAssets(mRule.getActivity().getAssets(),
+                STARGAZERS_RESPONSE_ERROR_FILENAME);
+
+        server.enqueue(new MockResponse()
+                .setResponseCode(404)
+                .setBody(responseString));
+
+        onView(withId(R.id.emptyViewId)).check(matches(isDisplayed()));
+        onView(withId(R.id.stargazerProgressbarId)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.stargazerRecyclerViewId)).check(matches(not(isDisplayed())));
+    }
 
     @After
     public void tearDown() throws Exception {
         server.shutdown();
     }
 
-    private static class RestServiceTestHelper {
-        public static String getStringFromFile(Context context, String fileName) {
-            return "blal";
-        }
-    }
 }
