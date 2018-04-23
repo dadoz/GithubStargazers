@@ -15,5 +15,7 @@ public interface StargazerContract {
     interface StargazerPresenterInterface extends BasePresenter {
         void unsubscribe();
         void retrieveItems(SparseArray<String> params);
+        void bindView(StargazerView view);
+        void deleteView();
     }
 }

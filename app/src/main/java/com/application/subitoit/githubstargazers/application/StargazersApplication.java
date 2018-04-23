@@ -1,8 +1,9 @@
 package com.application.subitoit.githubstargazers.application;
 
-import android.app.Application;
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication;
 
-public class StargazersApplication extends Application {
+public class StargazersApplication extends DaggerApplication {
     private String owner;
     private String repo;
 
@@ -20,5 +21,10 @@ public class StargazersApplication extends Application {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return null;
     }
 }

@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void bindView() {
-        repoOwnerDataView = (RepoOwnerDataView) findViewById(R.id.repoOwnerDataViewId);
+        repoOwnerDataView = findViewById(R.id.repoOwnerDataViewId);
     }
 
     /**

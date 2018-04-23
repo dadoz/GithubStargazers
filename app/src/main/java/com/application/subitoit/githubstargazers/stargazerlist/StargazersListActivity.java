@@ -2,7 +2,6 @@ package com.application.subitoit.githubstargazers.stargazerlist;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
@@ -20,10 +19,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.android.support.DaggerAppCompatActivity;
+
 /**
  * stargazer activity
  */
-public class StargazersListActivity extends AppCompatActivity implements StargazerView {
+public class StargazersListActivity extends DaggerAppCompatActivity implements StargazerView {
     private String owner;
     private String repo;
     RecyclerView recyclerView;
@@ -60,6 +61,7 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
      */
     private void onInitView() {
         initActionbar();
+        presenter.bindView(this);
         presenter.retrieveItems(Utils.buildParams(owner, repo));
     }
 

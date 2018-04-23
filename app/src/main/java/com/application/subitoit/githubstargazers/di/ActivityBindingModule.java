@@ -1,14 +1,7 @@
 package com.application.subitoit.githubstargazers.di;
 
 import com.application.subitoit.githubstargazers.stargazerlist.StargazerPresenterModule;
-import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskActivity;
-import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskModule;
-import com.example.android.architecture.blueprints.todoapp.statistics.StatisticsActivity;
-import com.example.android.architecture.blueprints.todoapp.statistics.StatisticsModule;
-import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailActivity;
-import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailPresenterModule;
-import com.example.android.architecture.blueprints.todoapp.tasks.TasksActivity;
-import com.example.android.architecture.blueprints.todoapp.tasks.TasksModule;
+import com.application.subitoit.githubstargazers.stargazerlist.StargazersListActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -22,8 +15,8 @@ import dagger.android.ContributesAndroidInjector;
  */
 @Module
 public abstract class ActivityBindingModule {
-    //@ActivityScoped
+    @ActivityScoped
     @ContributesAndroidInjector(modules = StargazerPresenterModule.class)
-    abstract TasksActivity tasksActivity();
+    abstract StargazersListActivity tasksActivity();
 
 }
