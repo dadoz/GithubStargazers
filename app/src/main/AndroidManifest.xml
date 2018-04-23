@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".StargazersListActivity"/>
+        <activity android:name=".stargazerlist.StargazersListActivity"/>
     </application>
 
 </manifest>

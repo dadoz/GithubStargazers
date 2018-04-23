@@ -7,7 +7,7 @@
     android:padding="@dimen/activity_vertical_margin"
     tools:context="com.application.subitoit.githubstargazers.MainActivity">
 
-<com.application.subitoit.githubstargazers.views.RepoOwnerDataView
+<com.application.subitoit.githubstargazers.ui.RepoOwnerDataView
     android:id="@+id/repoOwnerDataViewId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>

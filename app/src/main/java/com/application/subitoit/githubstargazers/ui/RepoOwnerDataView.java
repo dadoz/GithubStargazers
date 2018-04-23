@@ -1,6 +1,5 @@
-package com.application.subitoit.githubstargazers.views;
+package com.application.subitoit.githubstargazers.ui;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.design.widget.TextInputLayout;

@@ -1,4 +1,4 @@
-package com.application.subitoit.githubstargazers;
+package com.application.subitoit.githubstargazers.stargazerlist;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -9,17 +9,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.application.subitoit.githubstargazers.R;
 import com.application.subitoit.githubstargazers.adapter.StargazerListAdapter;
 import com.application.subitoit.githubstargazers.application.StargazersApplication;
-import com.application.subitoit.githubstargazers.presenter.StargazerPresenter;
-import com.application.subitoit.githubstargazers.presenter.StargazerView;
+import com.application.subitoit.githubstargazers.stargazerlist.StargazerContract.StargazerView;
+import com.application.subitoit.githubstargazers.ui.EmptyView;
 import com.application.subitoit.githubstargazers.utils.Utils;
-import com.application.subitoit.githubstargazers.views.EmptyView;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
+import javax.inject.Inject;
 
+/**
+ * stargazer activity
+ */
 public class StargazersListActivity extends AppCompatActivity implements StargazerView {
     private String owner;
     private String repo;
@@ -27,13 +30,15 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
     ProgressBar progressBar;
     EmptyView emptyView;
 
-    private StargazerPresenter presenter;
+    @Inject
+    StargazerPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stargazers_list);
 
+        //TODO wth this is really terrible
         repo = ((StargazersApplication) getApplication()).getRepo();
         owner = ((StargazersApplication) getApplication()).getOwner();
 
@@ -42,12 +47,12 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
     }
 
     /**
-     *
+     * TODO move to butterknife
      */
     private void bindView() {
-        recyclerView = (RecyclerView) findViewById(R.id.stargazerRecyclerViewId);
-        progressBar = (ProgressBar) findViewById(R.id.stargazerProgressbarId);
-        emptyView = (EmptyView) findViewById(R.id.emptyViewId);
+        recyclerView =  findViewById(R.id.stargazerRecyclerViewId);
+        progressBar = findViewById(R.id.stargazerProgressbarId);
+        emptyView = findViewById(R.id.emptyViewId);
     }
 
     /**
@@ -55,12 +60,11 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
      */
     private void onInitView() {
         initActionbar();
-        presenter = new StargazerPresenter();
-        presenter.init(new WeakReference<>(this),
-                new WeakReference<>(this), Utils.buildParams(owner, repo));
+        presenter.retrieveItems(Utils.buildParams(owner, repo));
     }
 
     /**
+     * TODO mv to base activity
      * actionbar set listener and back arrow
      */
     private void initActionbar() {
@@ -71,8 +75,25 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
         }
     }
 
+    /**
+     * todo mv on base
+     * @param item
+     * @return
+     */
     @Override
-    public void bindData(List<?> items, int i) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (presenter != null)
+                    presenter.unsubscribe();
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRenderData(List<?> items) {
         progressBar.setVisibility(View.GONE);
         emptyView.setVisibility(View.GONE);
         initRecyclerView(items);
@@ -80,8 +101,7 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
 
 
     @Override
-    public void onRetrieveDataError(String error) {
-        //TODO implement it - show a view maybe
+    public void onError(String error) {
         recyclerView.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
@@ -101,17 +121,5 @@ public class StargazersListActivity extends AppCompatActivity implements Stargaz
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new StargazerListAdapter(items));
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                if (presenter != null)
-                    presenter.unsubscribe();
-                onBackPressed();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
