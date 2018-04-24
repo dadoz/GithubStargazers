@@ -7,10 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.application.subitoit.githubstargazers.R;
 import com.application.subitoit.githubstargazers.adapter.StargazerListAdapter;
-import com.application.subitoit.githubstargazers.application.StargazersApplication;
+import com.application.subitoit.githubstargazers.StargazersApplication;
 import com.application.subitoit.githubstargazers.stargazerlist.StargazerContract.StargazerView;
 import com.application.subitoit.githubstargazers.ui.EmptyView;
 import com.application.subitoit.githubstargazers.utils.Utils;
@@ -109,6 +110,16 @@ public class StargazersListActivity extends DaggerAppCompatActivity implements S
         emptyView.setVisibility(View.VISIBLE);
         Snackbar.make(findViewById(R.id.activity_main), R.string.retrieve_error,
                 Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showStandardLoading() {
+        Toast.makeText(this, "show loader", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hideStandardLoading() {
+        Toast.makeText(this, "hide loader", Toast.LENGTH_SHORT).show();
     }
 
     /**

@@ -1,12 +1,10 @@
 package com.application.subitoit.githubstargazers;
 
 import android.content.Intent;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.application.subitoit.githubstargazers.application.StargazersApplication;
-import com.application.subitoit.githubstargazers.managers.RetrofitManager;
+import com.application.subitoit.githubstargazers.data.remote.services.RetrofitManager;
 import com.application.subitoit.githubstargazers.stargazerlist.StargazersListActivity;
 import com.application.subitoit.githubstargazers.utils.Utils;
 

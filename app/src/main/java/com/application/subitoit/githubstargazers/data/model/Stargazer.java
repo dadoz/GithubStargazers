@@ -1,4 +1,4 @@
-package com.application.subitoit.githubstargazers.model;
+package com.application.subitoit.githubstargazers.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

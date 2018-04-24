@@ -1,4 +1,6 @@
-package com.application.subitoit.githubstargazers.application;
+package com.application.subitoit.githubstargazers;
+
+import com.application.subitoit.githubstargazers.di.DaggerAppComponent;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;
@@ -25,6 +27,16 @@ public class StargazersApplication extends DaggerApplication {
 
     @Override
     protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        return null;
+        return getComponent();
+    }
+
+    /**
+     * get componente base builder
+     * @return
+     */
+    public AndroidInjector<? extends DaggerApplication> getComponent() {
+        return DaggerAppComponent.builder()
+                .application(this)
+                .build();
     }
 }

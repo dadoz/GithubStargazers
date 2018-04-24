@@ -1,15 +1,9 @@
 package com.application.subitoit.githubstargazers.utils;
 
-import android.app.Application;
 import android.content.res.AssetManager;
 import android.util.SparseArray;
 
-import com.application.subitoit.githubstargazers.application.StargazersApplication;
-
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class Utils {
     /**

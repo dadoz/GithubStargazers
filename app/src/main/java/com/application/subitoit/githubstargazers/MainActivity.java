@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.application.subitoit.githubstargazers.application.StargazersApplication;
 import com.application.subitoit.githubstargazers.stargazerlist.StargazersListActivity;
 import com.application.subitoit.githubstargazers.ui.RepoOwnerDataView;
 

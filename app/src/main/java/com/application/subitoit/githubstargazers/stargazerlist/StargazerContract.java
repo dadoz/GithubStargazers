@@ -11,6 +11,8 @@ public interface StargazerContract {
     interface StargazerView {
         void onRenderData(List<?> items);
         void onError(String error);
+        void showStandardLoading();
+        void hideStandardLoading();
     }
     interface StargazerPresenterInterface extends BasePresenter {
         void unsubscribe();

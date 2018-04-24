@@ -2,7 +2,7 @@ package com.application.subitoit.githubstargazers.di;
 
 import android.app.Application;
 
-import com.application.subitoit.githubstargazers.application.StargazersApplication;
+import com.application.subitoit.githubstargazers.StargazersApplication;
 
 import javax.inject.Singleton;
 

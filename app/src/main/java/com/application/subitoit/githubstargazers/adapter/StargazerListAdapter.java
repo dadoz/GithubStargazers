@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.application.subitoit.githubstargazers.R;
-import com.application.subitoit.githubstargazers.model.Stargazer;
+import com.application.subitoit.githubstargazers.data.model.Stargazer;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
