@@ -5,9 +5,13 @@ import com.application.subitoit.githubstargazers.data.model.Stargazer;
 
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 
 public interface StargazerDataSource {
     Observable<List<Stargazer>> getStargazer(String owner, String repo);
     void setStargazer(List<Stargazer> stargazers);
+
+    boolean hasStargazer();
 }

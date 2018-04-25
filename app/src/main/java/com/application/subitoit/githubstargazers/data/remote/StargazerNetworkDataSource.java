@@ -6,12 +6,15 @@ import com.application.subitoit.githubstargazers.data.remote.services.RetrofitSe
 
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 
 /**
  * Created by davide-syn on 4/24/18.
  */
 
+@Singleton
 public class StargazerNetworkDataSource implements StargazerDataSource {
     /**
      *
@@ -30,5 +33,10 @@ public class StargazerNetworkDataSource implements StargazerDataSource {
      */
     @Override
     public void setStargazer(List<Stargazer> stargazers) {
+    }
+
+    @Override
+    public boolean hasStargazer() {
+        return false;
     }
 }

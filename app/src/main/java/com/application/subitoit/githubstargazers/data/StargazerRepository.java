@@ -1,10 +1,8 @@
 package com.application.subitoit.githubstargazers.data;
 
 import com.application.subitoit.githubstargazers.data.local.Local;
-import com.application.subitoit.githubstargazers.data.local.StargazerLocalDataSource;
 import com.application.subitoit.githubstargazers.data.model.Stargazer;
 import com.application.subitoit.githubstargazers.data.remote.Remote;
-import com.application.subitoit.githubstargazers.data.remote.StargazerNetworkDataSource;
 
 import java.util.List;
 
@@ -32,7 +30,7 @@ public class StargazerRepository {
      * @return
      */
     public Observable<List<Stargazer>> getStargazer(String owner, String repo) {
-        if (localDataSource.getStargazer(owner, repo) != null) {
+        if (localDataSource.hasStargazer()) {
             //show data from cache
             return localDataSource.getStargazer(owner, repo);
         }
