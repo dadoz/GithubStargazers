@@ -18,11 +18,11 @@ import io.reactivex.Observable;
 
 public class StargazerRepository {
 
-    private final StargazerLocalDataSource localDataSource;
-    private final StargazerNetworkDataSource networkDataSource;
+    private final StargazerDataSource localDataSource;
+    private final StargazerDataSource networkDataSource;
 
     @Inject
-    StargazerRepository(@Local StargazerLocalDataSource localDataSource, @Remote StargazerNetworkDataSource networkDataSource) {
+    StargazerRepository(@Local StargazerDataSource localDataSource, @Remote StargazerDataSource networkDataSource) {
         this.localDataSource = localDataSource;
         this.networkDataSource = networkDataSource;
     }

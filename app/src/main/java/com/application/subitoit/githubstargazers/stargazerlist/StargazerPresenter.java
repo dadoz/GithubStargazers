@@ -14,7 +14,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.ObservableTransformer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
@@ -54,22 +53,12 @@ public class StargazerPresenter implements StargazerPresenterInterface {
     @Override
     public void retrieveItems(SparseArray<String> params) {
         Log.e(TAG, params.toString());
-        repository.getStargazer()
+        Disposable subscirbe = repository.getStargazer(params.get(0), params.get(1))
                 .compose(composeLoaderTransformer(loader))
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+//                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(items -> wifiDeviceNetworkView.get().onRenderData(items),
                         error -> wifiDeviceNetworkView.get().onError(error.getMessage()));
-
-//        disposable = RetrofitManager.getInstance()
-//                .getService()
-//                .getStargazers(params.get(0), params.get(1))
-//                .filter(list -> list != null && list.size() != 0)
-//                .switchIfEmpty(Observable.just(new ArrayList<>()))
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(items -> wifiDeviceNetworkView.get().onRenderData(items),
-//                        error -> wifiDeviceNetworkView.get().onError(error.getMessage()));
     }
 
 
