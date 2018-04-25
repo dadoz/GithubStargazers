@@ -5,6 +5,8 @@ import com.application.subitoit.githubstargazers.data.local.StargazerLocalDataSo
 import com.application.subitoit.githubstargazers.data.remote.Remote;
 import com.application.subitoit.githubstargazers.data.remote.StargazerNetworkDataSource;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -12,11 +14,14 @@ import dagger.Provides;
 public class StargzerRepositoryModule {
 
     @Provides
+    @Singleton
     @Local
     StargazerDataSource provideStargazerLocalDataSource() {
         return new StargazerLocalDataSource();
     }
+
     @Provides
+    @Singleton
     @Remote
     StargazerDataSource provideStargazerRemoteDataSource() {
         return new StargazerNetworkDataSource();
